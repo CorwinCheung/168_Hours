@@ -39,14 +39,6 @@ struct ContentView: View {
                     Text("Analytics")
                 }
                 .tag(2)
-            
-            SettingsView()
-                .environmentObject(timerManager)
-                .tabItem {
-                    Image(systemName: "gear")
-                    Text("Settings")
-                }
-                .tag(3)
         }
         .accentColor(.purple)
     }
@@ -128,20 +120,14 @@ struct ActivityRowView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
-        Button(action: {
-            if timerManager.activeActivity?.id == activity.id {
-                timerManager.stopTimer()
-            } else {
-                timerManager.startTimer(for: activity)
-            }
-        }) {
+        NavigationLink(destination: ActivityTimerView(activity: activity, timerManager: timerManager)) {
             HStack(spacing: 16) {
                 // Icon
                 Image(systemName: activity.icon ?? "book")
                     .font(.title2)
-                    .foregroundColor(Color(activity.color ?? "blue"))
+                    .foregroundColor(Color.from(name: activity.color ?? "blue"))
                     .frame(width: 40, height: 40)
-                    .background(Color(activity.color ?? "blue").opacity(0.1))
+                    .background(Color.from(name: activity.color ?? "blue").opacity(0.1))
                     .clipShape(Circle())
                 
                 // Activity Info
@@ -205,7 +191,7 @@ struct ActiveTimerView: View {
             HStack {
                 Image(systemName: activity.icon ?? "book")
                     .font(.title)
-                    .foregroundColor(Color(activity.color ?? "blue"))
+                    .foregroundColor(Color.from(name: activity.color ?? "blue"))
                 
                 Text(activity.name ?? "Unknown")
                     .font(.system(size: 20, weight: .semibold, design: .rounded))

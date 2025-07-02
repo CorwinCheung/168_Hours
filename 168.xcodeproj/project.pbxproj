@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		164DFCBC2E11F32A00019771 /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DFCAB2E11F32A00019771 /* AnalyticsView.swift */; };
 		164DFCBD2E11F32A00019771 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DFCAD2E11F32A00019771 /* CalendarView.swift */; };
-		164DFCBE2E11F32A00019771 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DFCB72E11F32A00019771 /* SettingsView.swift */; };
 		164DFCBF2E11F32A00019771 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DFCAE2E11F32A00019771 /* ContentView.swift */; };
 		164DFCC02E11F32A00019771 /* DailyMeaningTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 164DFCAF2E11F32A00019771 /* DailyMeaningTracker.xcdatamodeld */; };
 		164DFCC22E11F32A00019771 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DFCB82E11F32A00019771 /* TimerManager.swift */; };
@@ -21,6 +20,7 @@
 		164DFCCA2E11F32A00019771 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 164DFCB42E11F32A00019771 /* Preview Assets.xcassets */; };
 		164DFCCB2E11F32A00019771 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 164DFCB22E11F32A00019771 /* LaunchScreen.storyboard */; };
 		164DFCD02E1519A100019771 /* 168App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DFCCF2E1519A100019771 /* 168App.swift */; };
+		164DFCD22E151F9800019771 /* ActivityTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DFCD12E151F9800019771 /* ActivityTimerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,10 +34,10 @@
 		164DFCB32E11F32A00019771 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		164DFCB42E11F32A00019771 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		164DFCB62E11F32A00019771 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		164DFCB72E11F32A00019771 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		164DFCB82E11F32A00019771 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		164DFCBB2E11F32A00019771 /* DailyMeaningTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DailyMeaningTracker.xcdatamodel; sourceTree = "<group>"; };
 		164DFCCF2E1519A100019771 /* 168App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 168App.swift; sourceTree = "<group>"; };
+		164DFCD12E151F9800019771 /* ActivityTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTimerView.swift; sourceTree = "<group>"; };
 		168C79692D97CACE0091C8AE /* 168.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 168.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -63,6 +63,7 @@
 		168C79602D97CACE0091C8AE = {
 			isa = PBXGroup;
 			children = (
+				164DFCD12E151F9800019771 /* ActivityTimerView.swift */,
 				164DFCCF2E1519A100019771 /* 168App.swift */,
 				164DFCA72E11F32A00019771 /* 168.md */,
 				164DFCAA2E11F32A00019771 /* AddActivityView.swift */,
@@ -75,7 +76,6 @@
 				164DFCB32E11F32A00019771 /* PersistenceController.swift */,
 				164DFCB52E11F32A00019771 /* Preview Content */,
 				164DFCB62E11F32A00019771 /* README.md */,
-				164DFCB72E11F32A00019771 /* SettingsView.swift */,
 				164DFCB82E11F32A00019771 /* TimerManager.swift */,
 				168C796A2D97CACE0091C8AE /* Products */,
 			);
@@ -167,8 +167,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				164DFCBC2E11F32A00019771 /* AnalyticsView.swift in Sources */,
+				164DFCD22E151F9800019771 /* ActivityTimerView.swift in Sources */,
 				164DFCBD2E11F32A00019771 /* CalendarView.swift in Sources */,
-				164DFCBE2E11F32A00019771 /* SettingsView.swift in Sources */,
 				164DFCBF2E11F32A00019771 /* ContentView.swift in Sources */,
 				164DFCC02E11F32A00019771 /* DailyMeaningTracker.xcdatamodeld in Sources */,
 				164DFCC22E11F32A00019771 /* TimerManager.swift in Sources */,

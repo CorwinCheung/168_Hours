@@ -38,6 +38,8 @@ struct CalendarView: View {
                         // Legend
                         legend
                         
+                        activitiesList
+                        
                         Spacer(minLength: 50)
                     }
                     .padding(20)
@@ -89,7 +91,7 @@ struct CalendarView: View {
             
             // Calendar days
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: daysInWeek), spacing: 8) {
-                ForEach(calendarDays, id: \.self) { date in
+                ForEach(Array(calendarDays.enumerated()), id: \.offset) { index, date in
                     if let date = date {
                         CalendarDayView(
                             date: date,
@@ -130,6 +132,23 @@ struct CalendarView: View {
             }
         }
         .padding(.top, 20)
+    }
+    
+    private var activitiesList: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Activities Tracked")
+                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                .foregroundColor(.primary)
+            ForEach(activities, id: \.id) { activity in
+                HStack(spacing: 8) {
+                    Image(systemName: activity.icon ?? "book")
+                        .foregroundColor(Color.from(name: activity.color ?? "blue"))
+                    Text(activity.name ?? "Unknown")
+                        .foregroundColor(.primary)
+                }
+            }
+        }
+        .padding(.top, 8)
     }
     
     private var monthYearString: String {
@@ -309,9 +328,9 @@ struct ActivityBreakdownRow: View {
         HStack(spacing: 16) {
             Image(systemName: activity.icon ?? "book")
                 .font(.title2)
-                .foregroundColor(Color(activity.color ?? "blue"))
+                .foregroundColor(Color.from(name: activity.color ?? "blue"))
                 .frame(width: 40, height: 40)
-                .background(Color(activity.color ?? "blue").opacity(0.1))
+                .background(Color.from(name: activity.color ?? "blue").opacity(0.1))
                 .clipShape(Circle())
             
             VStack(alignment: .leading, spacing: 4) {

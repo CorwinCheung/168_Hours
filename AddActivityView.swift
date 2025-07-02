@@ -8,24 +8,65 @@
 import SwiftUI
 import CoreData
 
+extension Color {
+    init(colorName: String) {
+        switch colorName {
+        case "systemBlue":
+            self = .blue
+        case "systemPurple":
+            self = .purple
+        case "systemGreen":
+            self = .green
+        case "systemOrange":
+            self = .orange
+        case "systemRed":
+            self = .red
+        case "systemPink":
+            self = .pink
+        case "systemIndigo":
+            self = .indigo
+        case "systemTeal":
+            self = .teal
+        case "systemMint":
+            self = .mint
+        case "systemCyan":
+            self = .cyan
+        default:
+            self = .blue // fallback
+        }
+    }
+}
+
 struct AddActivityView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     
     @State private var activityName = ""
     @State private var selectedIcon = "book"
-    @State private var selectedColor = "blue"
+    @State private var selectedColor = "systemBlue"
     
     private let icons = [
-        "book", "brain.head.profile", "figure.walk", "pencil", "leaf", 
-        "heart", "music.note", "paintbrush", "gamecontroller", "camera",
-        "house", "car", "airplane", "bicycle", "dumbbell", "yoga",
-        "meditation", "cooking", "cleaning", "shopping", "social"
+        "book",                              // reading
+        "chevron.left.slash.chevron.right",  // coding
+        "pencil"                             // writing
     ]
     
-    private let colors = [
-        "blue", "purple", "green", "orange", "red", "pink", "indigo", "teal"
+    private let colors: [(name: String, color: Color)] = [
+        ("systemBlue", .blue),
+        ("systemPurple", .purple),
+        ("systemGreen", .green),
+        ("systemOrange", .orange),
+        ("systemRed", .red),
+        ("systemPink", .pink),
+        ("systemIndigo", .indigo),
+        ("systemTeal", .teal),
+        ("systemMint", .mint),
+        ("systemCyan", .cyan)
     ]
+    
+    private var selectedColorValue: Color {
+        colors.first { $0.name == selectedColor }?.color ?? .blue
+    }
     
     var body: some View {
         NavigationView {
@@ -34,56 +75,84 @@ struct AddActivityView: View {
                     .ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: 24) {
-                        // Activity Name
-                        VStack(alignment: .leading, spacing: 8) {
+                    VStack(spacing: 28) {
+                        // Header with context
+                        VStack(spacing: 8) {
+                            Text("Create New Activity")
+                                .font(.system(size: 24, weight: .bold, design: .rounded))
+                                .foregroundColor(.primary)
+                            
+                            Text("Track what matters most to you")
+                                .font(.system(size: 16, weight: .medium, design: .rounded))
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.top, 20)
+                        
+                        // Activity Name Section
+                        VStack(alignment: .leading, spacing: 12) {
                             Text("Activity Name")
                                 .font(.system(size: 18, weight: .semibold, design: .rounded))
                                 .foregroundColor(.primary)
                             
                             TextField("e.g., Reading, Meditation, Walking", text: $activityName)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .textFieldStyle(PlainTextFieldStyle())
                                 .font(.system(size: 16, design: .rounded))
+                                .padding(16)
+                                .background(Color(.systemBackground))
+                                .cornerRadius(12)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color(.systemGray4), lineWidth: 1)
+                                )
                         }
                         
-                        // Icon Selection
-                        VStack(alignment: .leading, spacing: 12) {
+                        // Icon Selection Section
+                        VStack(alignment: .leading, spacing: 16) {
                             Text("Choose an Icon")
                                 .font(.system(size: 18, weight: .semibold, design: .rounded))
                                 .foregroundColor(.primary)
                             
-                            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: 12) {
+                            HStack(spacing: 24) {
                                 ForEach(icons, id: \.self) { icon in
                                     Button(action: { selectedIcon = icon }) {
                                         Image(systemName: icon)
-                                            .font(.title2)
-                                            .foregroundColor(selectedIcon == icon ? .white : Color(selectedColor))
-                                            .frame(width: 44, height: 44)
+                                            .font(.system(size: 24))
+                                            .foregroundColor(selectedIcon == icon ? .white : selectedColorValue)
+                                            .frame(width: 56, height: 56)
                                             .background(
-                                                Circle()
-                                                    .fill(selectedIcon == icon ? Color(selectedColor) : Color(selectedColor).opacity(0.1))
+                                                RoundedRectangle(cornerRadius: 12)
+                                                    .fill(selectedIcon == icon ? selectedColorValue : selectedColorValue.opacity(0.1))
+                                            )
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 12)
+                                                    .stroke(selectedIcon == icon ? selectedColorValue : Color.clear, lineWidth: 2)
                                             )
                                     }
                                     .buttonStyle(PlainButtonStyle())
                                 }
+                                Spacer()
                             }
                         }
                         
-                        // Color Selection
-                        VStack(alignment: .leading, spacing: 12) {
+                        // Color Selection Section
+                        VStack(alignment: .leading, spacing: 16) {
                             Text("Choose a Color")
                                 .font(.system(size: 18, weight: .semibold, design: .rounded))
                                 .foregroundColor(.primary)
                             
-                            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 8), spacing: 12) {
-                                ForEach(colors, id: \.self) { color in
-                                    Button(action: { selectedColor = color }) {
+                            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 5), spacing: 16) {
+                                ForEach(colors, id: \.name) { colorItem in
+                                    Button(action: { selectedColor = colorItem.name }) {
                                         Circle()
-                                            .fill(Color(color))
-                                            .frame(width: 44, height: 44)
+                                            .fill(colorItem.color)
+                                            .frame(width: 48, height: 48)
                                             .overlay(
                                                 Circle()
-                                                    .stroke(Color.primary, lineWidth: selectedColor == color ? 3 : 0)
+                                                    .stroke(Color.primary, lineWidth: selectedColor == colorItem.name ? 3 : 0)
+                                            )
+                                            .overlay(
+                                                Circle()
+                                                    .stroke(Color.white, lineWidth: selectedColor == colorItem.name ? 2 : 0)
                                             )
                                     }
                                     .buttonStyle(PlainButtonStyle())
@@ -91,9 +160,45 @@ struct AddActivityView: View {
                             }
                         }
                         
-                        Spacer(minLength: 50)
+                        // Preview Section
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Preview")
+                                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                                .foregroundColor(.primary)
+                            
+                            HStack(spacing: 16) {
+                                Image(systemName: selectedIcon)
+                                    .font(.title2)
+                                    .foregroundColor(selectedColorValue)
+                                    .frame(width: 40, height: 40)
+                                    .background(selectedColorValue.opacity(0.1))
+                                    .clipShape(Circle())
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(activityName.isEmpty ? "Activity Name" : activityName)
+                                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                                        .foregroundColor(activityName.isEmpty ? .secondary : .primary)
+                                    
+                                    Text("0m today")
+                                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                                        .foregroundColor(.secondary)
+                                }
+                                
+                                Spacer()
+                                
+                                Image(systemName: "play.circle.fill")
+                                    .font(.title2)
+                                    .foregroundColor(.purple)
+                            }
+                            .padding(16)
+                            .background(Color(.systemBackground))
+                            .cornerRadius(16)
+                            .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+                        }
+                        
+                        Spacer(minLength: 60)
                     }
-                    .padding(20)
+                    .padding(.horizontal, 20)
                 }
             }
             .navigationTitle("New Activity")

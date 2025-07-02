@@ -39,21 +39,21 @@ struct PersistenceController {
         reading.id = UUID()
         reading.name = "Reading"
         reading.icon = "book"
-        reading.color = "blue"
+        reading.color = "systemBlue"
         reading.createdAt = Date()
         
         let meditation = Activity(context: viewContext)
         meditation.id = UUID()
         meditation.name = "Meditation"
         meditation.icon = "brain.head.profile"
-        meditation.color = "purple"
+        meditation.color = "systemPurple"
         meditation.createdAt = Date()
         
         let walking = Activity(context: viewContext)
         walking.id = UUID()
         walking.name = "Walking"
         walking.icon = "figure.walk"
-        walking.color = "green"
+        walking.color = "systemGreen"
         walking.createdAt = Date()
         
         // Add sample time entries

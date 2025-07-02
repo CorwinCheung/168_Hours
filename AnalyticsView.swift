@@ -8,6 +8,26 @@
 import SwiftUI
 import CoreData
 
+extension Color {
+    static func from(name: String) -> Color {
+        switch name.lowercased() {
+        case "red": return .red
+        case "blue": return .blue
+        case "green": return .green
+        case "orange": return .orange
+        case "yellow": return .yellow
+        case "purple": return .purple
+        case "pink": return .pink
+        case "gray": return .gray
+        case "black": return .black
+        case "white": return .white
+        case "mint": return .mint
+        case "cyan": return .cyan
+        default: return .blue // fallback
+        }
+    }
+}
+
 struct AnalyticsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
@@ -53,6 +73,7 @@ struct AnalyticsView: View {
             .navigationTitle("Analytics")
             .navigationBarTitleDisplayMode(.large)
         }
+        exportDataButton
     }
     
     private var timeframeSelector: some View {
@@ -67,7 +88,7 @@ struct AnalyticsView: View {
     private var summaryCards: some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), spacing: 16) {
             SummaryCard(
-                title: "Total Time",
+                title: "Total Focus Time",
                 value: totalTimeString,
                 icon: "clock",
                 color: .purple
@@ -170,6 +191,32 @@ struct AnalyticsView: View {
         .padding(20)
         .background(Color(.systemBackground))
         .cornerRadius(16)
+    }
+    
+    private var exportDataButton: some View {
+        Button(action: exportData) {
+            HStack {
+                Image(systemName: "square.and.arrow.up")
+                    .font(.title3)
+                    .foregroundColor(.blue)
+                Text("Export Data")
+                    .font(.system(size: 16, weight: .medium, design: .rounded))
+                    .foregroundColor(.primary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            .padding()
+            .background(Color(.systemGray6))
+            .cornerRadius(12)
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+    
+    private func exportData() {
+        // Placeholder for data export functionality
+        print("Export data")
     }
     
     // MARK: - Computed Properties
@@ -283,7 +330,7 @@ struct ActivityChartRow: View {
         HStack(spacing: 12) {
             Image(systemName: activity.icon ?? "book")
                 .font(.title3)
-                .foregroundColor(Color(activity.color ?? "blue"))
+                .foregroundColor(Color.from(name: activity.color ?? "systemBlue"))
                 .frame(width: 24, height: 24)
             
             VStack(alignment: .leading, spacing: 4) {
@@ -331,7 +378,7 @@ struct GoalProgressRow: View {
             HStack {
                 Image(systemName: activity.icon ?? "book")
                     .font(.title3)
-                    .foregroundColor(Color(activity.color ?? "blue"))
+                    .foregroundColor(Color.from(name: activity.color ?? "systemBlue"))
                 
                 Text(activity.name ?? "Unknown")
                     .font(.system(size: 16, weight: .semibold, design: .rounded))
@@ -345,7 +392,7 @@ struct GoalProgressRow: View {
             }
             
             ProgressView(value: progressPercentage, total: 100)
-                .progressViewStyle(LinearProgressViewStyle(tint: Color(activity.color ?? "blue")))
+                .progressViewStyle(LinearProgressViewStyle(tint: Color.from(name: activity.color ?? "systemBlue")))
                 .scaleEffect(x: 1, y: 2, anchor: .center)
         }
         .padding(.vertical, 8)
